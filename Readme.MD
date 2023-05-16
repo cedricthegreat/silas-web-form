@@ -42,7 +42,7 @@ Voor Windows gebruikers:
 
 ## Het resultaat
 
-Gaat alles goed, dan opent chrome (het is niet nodig dat deze al openstaat, of dat je naar het formulier surft), en wordt het formulier ingevuld.
+Gaat alles goed, dan opent Chrome en wordt het formulier ingevuld. (Het is **niet** nodig dat deze al openstaat, of dat je naar het formulier surft.)
 
 ### Wat doet het wel, wat doet het (nog) niet:
 Alles wordt aangeduid of ingevuld.
