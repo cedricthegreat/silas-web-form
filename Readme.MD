@@ -29,7 +29,7 @@ en
     pip install webdriver-manager
 
 ### 3. Chrome installeren
-Dit scriptje werkt enkel met Chrome, als je deze browser niet op je computer hebt staan, dan kan je ze installeren via deze [link](https://www.google.com/chrome)
+Dit scriptje werkt enkel met Chrome. Is deze browser niet op je computer geïnstalleerd, dan kan dit via deze [link](https://www.google.com/chrome)
 
 ## Het script zelf:
 
