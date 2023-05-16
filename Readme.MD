@@ -20,6 +20,8 @@ Deze installeer je via de commandline (na Python te hebben geïnstalleerd in sta
 
 Open de terminal van je computer, en geef volgende in:
 
+(Indien je onvoldoende toegangsrechten hebt om onderstaande uit te voeren, moet je je terminal openen als administrator. In windows doe je dit door rechts te klikken op het icoontje van je terminal, en kiezen voor "run as adminstrator")
+
     pip install selenium
 
 en
@@ -31,7 +33,7 @@ Dit scriptje werkt enkel met Chrome, als je deze browser niet op je computer heb
 
 ## Het script zelf:
 
-Na bovenstaande te hebben doorlopen, moet je het scriptje zelf nog laten lopen.
+Na bovenstaande te hebben doorlopen, moet je het scriptje zelf laten lopen.
 
 Voor Windows gebruikers:
 1. Je gaat naar de locatie waar je het bestandje hebt geplaatst
