@@ -11,14 +11,14 @@ Het scriptje is opgesteld in de programmeertaal Python. Om het te laten werken m
 
 Of als je me niet vertrouwt, zoek je gewoon in Google naar Python, en zou helemaal bovenaan [Python.org](https://www.python.org/) moeten staan, en download je het zo.
 
-Uiteraard na het downloaden niet vergeten te installeren (dit is redelijk vanzelfsprekend, dubbelklikken op wat je hebt gedownload, en een paar keer op volgende klikken).
+Uiteraard na het downloaden niet vergeten te installeren. De installatie is redelijk vanzelfsprekend, dubbelklikken op wat je hebt gedownload, een paar keer op volgende klikken, en eventueel je computer herstarten (normaliter niet nodig, maar het kan geen kwaad).
 
 ### 2. Packages installeren
-Het scriptje maakt gebruik van twee packages, nl. selenium en webdriver-manager, die worden gebruikt voor het automatiseren van de browser. 
+Het scriptje maakt gebruik van twee packages, nl. selenium en webdriver-manager, dewelke worden gebruikt voor het automatiseren van de browser. 
 
-Deze installeer je via de commandline (na Python te hebben geïnstalleerd in stap 1!)
+Je intstalleert ze via de commandline (na Python te hebben geïnstalleerd in stap 1!)
 
-Open de terminal van je computer, en geef volgende in:
+Open de terminal (op bv. Windows PowerShell (x86), gebruik **niet** PowerShell ISE) van je computer, en geef volgende in:
 
 (Indien je onvoldoende toegangsrechten hebt om onderstaande uit te voeren, moet je je terminal openen als administrator. In windows doe je dit door rechts te klikken op het icoontje van je terminal, en kiezen voor "run as adminstrator")
 
@@ -48,7 +48,7 @@ Gaat alles goed, dan opent Chrome en wordt het formulier ingevuld. (Het is **nie
 Alles wordt aangeduid of ingevuld.
 
 De submitknop moet je nog in deze versie nog manueel klikken. 
-Ook dit kan automatisch, en is eigenlijk al voorzien. Maar dan kan je natuurlijk niets nazien, wat bij deze (proef)versie niet de bedoeling is.
+Ook dit kan automatisch, en is eigenlijk al voorzien maar niet geactiveerd omdat je dan natuurlijk niets kan nazien, wat bij deze (proef)versie wel de bedoeling is.
 
 Waarvoor kijk ik nog (mits tijd): De mogelijkheid om het scriptje iets voor 8u op te starten, en dat het zelf kijkt wanneer het 8u is, en dan pas verder gaat. Op deze manier hoef je zelf niet in de gaten te houden wanneer het precies 8u is, om dan pas het scriptje te laten lopen.
 
