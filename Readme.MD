@@ -13,6 +13,8 @@ Of als je me niet vertrouwt, zoek je gewoon in Google naar Python, en zou helema
 
 Uiteraard na het downloaden niet vergeten te installeren. De installatie is redelijk vanzelfsprekend, dubbelklikken op wat je hebt gedownload, een paar keer op volgende klikken, en eventueel je computer herstarten (normaliter niet nodig, maar het kan geen kwaad).
 
+**Belangrijk** "Add Python 3.11.3 to PATH" aanvinken.
+
 ### 2. Packages installeren
 Het scriptje maakt gebruik van twee packages, nl. selenium en webdriver-manager, dewelke worden gebruikt voor het automatiseren van de browser. 
 
