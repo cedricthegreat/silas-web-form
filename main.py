@@ -26,127 +26,133 @@ def open_form():
                   ignored_exceptions=[ElementNotVisibleException, ElementNotSelectableException])
 
 
-def radiobutton_by_xpath(xpath):
+def select_radiobutton_by_xpath_of_answer(xpath):
     driver.find_element(By.XPATH, xpath).click()
 
 
-def fill_in_text_field_by_xpath(question_xpath, answer):
-    next_input_field_xpath = f"{question_xpath}/following::input[@data-automation-id='textInput'][1]"
-    next_input = driver.find_element(By.XPATH, next_input_field_xpath)
-    next_input.send_keys(answer)
+def select_radiobutton_by_keywords_of_question(question_keywords, answer):
+    question_xpath = find_question_xpath_by_question_keywords(question_keywords)
+    next_radio_button_xpath = f"{question_xpath}/following::span[@data-automation-id='radio' and @data-automation-value='{answer}']"
+    driver.find_element(By.XPATH, next_radio_button_xpath).click()
 
 
-def find_xpath_of_text_field_by_question_keywords(question_keywords, answer):
+def fill_in_text_field_by_question_keywords(question_keywords, answer):
+    input_field = driver.find_element(By.XPATH, find_xpath_of_text_field_by_question_keywords(question_keywords))
+    input_field.send_keys(answer)
+
+
+def find_xpath_of_text_field_by_question_keywords(question_keywords):
+    question_xpath = find_question_xpath_by_question_keywords(question_keywords)
+    return f"{question_xpath}/following::input[@data-automation-id='textInput'][1]"
+
+
+def find_question_xpath_by_question_keywords(question_keywords):
     keyword_conditions = [f"contains(text(), '{kw}')" for kw in question_keywords]
     question_xpath = f"//*[{' and '.join(keyword_conditions)}]"
-    next_input_field_xpath = f"{question_xpath}/following::input[@data-automation-id='textInput'][1]"
-    next_input = driver.find_element(By.XPATH, next_input_field_xpath)
-    next_input.send_keys(answer)
+    return question_xpath
 
 
 def fill_in_form():
     # # Question 1: Eerste keuze (radio button)
-    xpath_first_question = "//*[contains(text(), 'Kleuter Type 9')]"
-    radiobutton_by_xpath(xpath_first_question)
+    answer_xpath = find_question_xpath_by_question_keywords(["Kleuter", "Type", "9"])
+    select_radiobutton_by_xpath_of_answer(answer_xpath)
 
     # # Question 2: Tweede keuze (leave void)
 
-    # # Question 3: Familienaam van de leerling
-    answer_to_question = "Delacourt"
-    question_xpath = "//*[contains(text(), 'Familienaam van de leerling')]"
-    fill_in_text_field_by_xpath(question_xpath, answer_to_question)
+    # Question 3: Familienaam van de leerling
+    keywords = ["Familienaam", "leerling"]
+    answer = "Delacourt"
+    fill_in_text_field_by_question_keywords(keywords, answer)
 
     # # Question 4: Voornaam van de leerling
-    find_xpath_of_text_field_by_question_keywords(["Voornaam", "leerling"], "Silas")
+    keywords = ["Voornaam", "leerling"]
+    answer = "Silas"
+    fill_in_text_field_by_question_keywords(keywords, answer)
 
     # Sloppy af
     # Question 5: Geboortedatum van de leerling
-    geboortedatum = driver.find_element(By.ID, "DatePicker0-label")
-    geboortedatum_placeholder = geboortedatum.get_attribute("placeholder").lower()
-    geboortedatum.click()
+    birthdate = driver.find_element(By.ID, "DatePicker0-label")
+    birthdate_placeholder = birthdate.get_attribute("placeholder").lower()
+    birthdate.click()
 
-    if geboortedatum_placeholder.__contains__("dd/mm/yyyy"):
-        geboortedatum.send_keys("24/08/2019")
-    elif geboortedatum_placeholder.__contains__("mm/dd/yyyy"):
-        geboortedatum.send_keys("08/24/2019")
-    elif geboortedatum_placeholder.__contains__("m/dd/yyyy"):
-        geboortedatum.send_keys("8/24/2019")
-    elif geboortedatum_placeholder.__contains__("dd/m/yyyy"):
-        geboortedatum.send_keys("24/8/2019")
+    if birthdate_placeholder.__contains__("dd/mm/yyyy"):
+        birthdate.send_keys("24/08/2019")
+    elif birthdate_placeholder.__contains__("mm/dd/yyyy"):
+        birthdate.send_keys("08/24/2019")
+    elif birthdate_placeholder.__contains__("m/dd/yyyy"):
+        birthdate.send_keys("8/24/2019")
+    elif birthdate_placeholder.__contains__("dd/m/yyyy"):
+        birthdate.send_keys("24/8/2019")
 
-    elif geboortedatum_placeholder.__contains__("dd-mm-yyyy"):
-        geboortedatum.send_keys("08-24-2019")
-    elif geboortedatum_placeholder.__contains__("mm-dd-yyyy"):
-        geboortedatum.send_keys("08-24-2019")
-    elif geboortedatum_placeholder.__contains__("m-dd-yyyy"):
-        geboortedatum.send_keys("8-24-2019")
-    elif geboortedatum_placeholder.__contains__("dd-m-yyyy"):
-        geboortedatum.send_keys("24-8-2019")
+    elif birthdate_placeholder.__contains__("dd-mm-yyyy"):
+        birthdate.send_keys("08-24-2019")
+    elif birthdate_placeholder.__contains__("mm-dd-yyyy"):
+        birthdate.send_keys("08-24-2019")
+    elif birthdate_placeholder.__contains__("m-dd-yyyy"):
+        birthdate.send_keys("8-24-2019")
+    elif birthdate_placeholder.__contains__("dd-m-yyyy"):
+        birthdate.send_keys("24-8-2019")
 
     # # Question 6: Rijksregisternummer van de leerling (zie achterkant identiteitskaart)
-    rijksregisternummer = driver.find_element(By.XPATH,
-                                              "//*[contains(text(), 'Rijksregisternummer')]/../../../following-sibling::div/div/span/input")
-    rijksregisternummer.send_keys("19082420148")
+    keywords = ["Rijksregisternummer"]
+    answer = "19082420148"
+    fill_in_text_field_by_question_keywords(keywords, answer)
 
     # # Question 7: Geslacht van de leerling
     geslacht = driver.find_element(By.XPATH, "//*[contains(text(), 'Jongen')]")
     geslacht.click()
 
     # # Question 8: Domicilieadres van de leerling: straat en nummer
-    domicilie_straat_en_nr = driver.find_element(By.XPATH,
-                                                 "//*[contains(text(), 'straat')]/../../../following-sibling::div/div/span/input")
-    domicilie_straat_en_nr.send_keys("Sint-Arnolduslaan 35")
-    #
+    keywords = ["adres", "leerling", "straat"]
+    answer = "Sint-Arnolduslaan 35"
+    fill_in_text_field_by_question_keywords(keywords, answer)
+
     # # Question 9: Domicilieadres van de leerling: postcode en gemeente
-    domicilie_postcode_en_gemeente = driver.find_element(By.XPATH,
-                                                         "//*[contains(text(), 'postcode')]/../../../following-sibling::div/div/span/input")
-    domicilie_postcode_en_gemeente.send_keys("8200 Sint-Michiels")
+    keywords = ["postcode", "gemeente"]
+    answer = "8200 Sint-Michiels"
+    fill_in_text_field_by_question_keywords(keywords, answer)
 
     # # Question 10: Familienaam en voornaam van de vader
-    # naam_vader = driver.find_element(By.XPATH, "//*[contains(text(), 'Familienaam en voornaam van de vader')]/../../../following-sibling::div/div/span/input")
-    # naam_vader.send_keys("Delacourt Mathias")
-
-    naam_vader = driver.find_element(By.XPATH,
-                                     "//*[contains(text(), 'Familienaam')]/../../../following-sibling::div/div/span/input" and "//*[contains(text(), 'vader')]/../../../following-sibling::div/div/span/input")
-    naam_vader.send_keys("Delacourt Mathias")
+    keywords = ["Familienaam", "voornaam", "vader"]
+    answer = "Delacourt Mathias"
+    fill_in_text_field_by_question_keywords(keywords, answer)
 
     # # Question 11: Telefoonnummer van de vader
-    telefoon_vader = driver.find_element(By.XPATH,
-                                         "//*[contains(text(), 'Telefoonnummer van de vader')]/../../../following-sibling::div/div/span/input")
-    telefoon_vader.send_keys("0486776340")
+    keywords = ["Telefoonnummer", "vader"]
+    answer = "0486776340"
+    fill_in_text_field_by_question_keywords(keywords, answer)
 
     # # Question 12: E-mailadres van de vader
-    email_vader = driver.find_element(By.XPATH,
-                                      "//*[contains(text(), 'E-mailadres van de vader')]/../../../following-sibling::div/div/span/input")
-    email_vader.send_keys("mathias.delacourt@gmail.com")
+    keywords = ["E-mailadres", "vader"]
+    answer = "mathias.delacourt@gmail.com"
+    fill_in_text_field_by_question_keywords(keywords, answer)
 
     # # Question 13: Familienaam en voornaam van de moeder
-    naam_moeder = driver.find_element(By.XPATH,
-                                      "//*[contains(text(), 'Familienaam en voornaam van de moeder')]/../../../following-sibling::div/div/span/input")
-    naam_moeder.send_keys("Puystjens Nathalie")
+    keywords = ["Familienaam", "voornaam", "moeder"]
+    answer = "Puystjens Nathalie"
+    fill_in_text_field_by_question_keywords(keywords, answer)
 
     # # Question 14: Telefoonnummer van de moeder
-    telefoon_moeder = driver.find_element(By.XPATH,
-                                          "//*[contains(text(), 'Telefoonnummer van de moeder')]/../../../following-sibling::div/div/span/input")
-    telefoon_moeder.send_keys("0486909713")
+    keywords = ["Telefoonnummer", "moeder"]
+    answer = "0486909712"
+    fill_in_text_field_by_question_keywords(keywords, answer)
 
     # # Question 15: E-mailadres van de moeder
-    email_moeder = driver.find_element(By.XPATH,
-                                       "//*[contains(text(), 'E-mailadres van de moeder')]/../../../following-sibling::div/div/span/input")
-    email_moeder.send_keys("nathaliepuystjens@gmail.com")
+    keywords = ["E-mailadres", "moeder"]
+    answer = "nathaliepuystjens@gmail.com"
+    fill_in_text_field_by_question_keywords(keywords, answer)
 
     # # Question 16: De vorige school van de leerling
-    email_moeder = driver.find_element(By.XPATH,
-                                       "//*[contains(text(), 'De vorige school van de leerling')]/../../../following-sibling::div/div/span/input")
-    email_moeder.send_keys("SBS De Geluksvogel")
+    keywords = ["vorige", "school"]
+    answer = "SBS De Geluksvogel"
+    fill_in_text_field_by_question_keywords(keywords, answer)
 
     # # Question 17: Is er een verslag van het CLB voor het buitengewoon onderwijs Type 3, type 7 of type 9
-    verslag = driver.find_element(By.XPATH, "//*[contains(text(), 'nog in opmaak')]")
-    verslag.click()
+    answer_xpath = find_question_xpath_by_question_keywords(["in", "opmaak"])
+    select_radiobutton_by_xpath_of_answer(answer_xpath)
 
     # Question 18: Verplicht om te kunnen inschrijven: Ben je akkoord met het schoolreglement en pedagogisch project van de school (zie link op website https://de-kade.be/nl/de-kade/onderwijs/bubao-het-anker )
-    akkoord_schoolreglement = driver.find_element(By.ID, "QuestionChoiceOption18")
-    akkoord_schoolreglement.click()
+    select_radiobutton_by_keywords_of_question(["schoolreglement"], "ja")
 
     # Question 19: Als u uw kind inschrijft in onze school Het Anker gaat u akkoord met de uitwisseling van persoonsgegevens met de verantwoordelijke van het lokaal overlegplatform die de inschrijvingen in de Brugse scholen ondersteunt. Meer uitgebreide info kan je nalezen op onze website via de link over privacy. Als u niet akkoord bent met deze werkwijze, kan u dit melden via Tel 02 55 30 42 5 / GSM 0478669440 / e-mail luna.janssen@ond.vlaanderen.be
 
