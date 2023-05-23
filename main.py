@@ -1,10 +1,15 @@
 from selenium import webdriver
 from selenium.common import ElementNotVisibleException, ElementNotSelectableException
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.options import Options
+
+IN_TEST = True
+
+test_form_url = "https://forms.office.com/Pages/ResponsePage.aspx?id=sUvtTf9rs0Ku12o2pQO_eoG9h3aWFuJHmfvBQG46FWZUNDg3TVBSVzlFRkFPUUFSUlBWMUo2NjczMS4u"
+form_url = "https://forms.office.com/e/QGEDJR02YU"
 
 options = Options()
 options.add_experimental_option('detach', True)
@@ -19,9 +24,13 @@ def main():
 
 
 def open_form():
+    if IN_TEST:
+        url = test_form_url
+    else:
+        url = form_url
+
     driver.implicitly_wait(10)
-    driver.get(
-        "https://forms.office.com/Pages/ResponsePage.aspx?id=sUvtTf9rs0Ku12o2pQO_eoG9h3aWFuJHmfvBQG46FWZUNDg3TVBSVzlFRkFPUUFSUlBWMUo2NjczMS4u")
+    driver.get(url)
     WebDriverWait(driver, timeout=10, poll_frequency=1,
                   ignored_exceptions=[ElementNotVisibleException, ElementNotSelectableException])
 
