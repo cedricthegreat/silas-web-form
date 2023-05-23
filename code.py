@@ -11,8 +11,8 @@ options.add_experimental_option('detach', True)
 driver = webdriver.Chrome(options=options, service=Service(ChromeDriverManager().install()))
 
 
-def main(tis_voor_echt):
-    open_form(tis_voor_echt)
+def main(is_test=True):
+    open_form(is_test)
     fill_in_form()
     # submit_form()
     # quit_browser()
@@ -25,9 +25,9 @@ def open_form(test):
     driver.implicitly_wait(10)
 
     if test:
-        driver.get(form_url)
-    else:
         driver.get(test_form_url)
+    else:
+        driver.get(form_url)
 
     WebDriverWait(driver, timeout=10, poll_frequency=1,
                   ignored_exceptions=[ElementNotVisibleException, ElementNotSelectableException])
